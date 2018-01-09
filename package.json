@@ -1,0 +1,15 @@
+{
+  "name": "generator-polarity-integration",
+  "version": "1.0.0",
+  "description": "This is a readme.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["yeoman-generator"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "yeoman-generator": "^2.0.2"
+  }
+}
