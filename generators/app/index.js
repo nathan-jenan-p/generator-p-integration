@@ -1,5 +1,21 @@
 var Generator = require('yeoman-generator');
 
+function toDisplayName(str) {
+    let newStr = str.charAt(0).toUpperCase();
+
+    for (let i = 1; i < str.length; i++) {
+        let character = str.charAt(i);
+
+        if (character === character.toUpperCase()) {
+            newStr += ` ${character}`;
+        } else {
+            newStr += character;
+        }
+    }
+
+    return newStr;
+}
+
 module.exports = class extends Generator {
     copyTemplates() {
         return this.prompt([{
@@ -17,12 +33,29 @@ module.exports = class extends Generator {
             type: 'input',
             name: 'dataTypes',
             message: 'Enter a comma separated list of data types (see documentation for available types)'
+        },
+        {
+            type: 'input',
+            name: 'integrationOptions',
+            message: 'Enter a comma separated list of integration options (host, username, password, etc.)'
         }]).then((answers) => {
             let dataTypes = answers.dataTypes.split(',').map((entry) => {
                 return `'${entry}'`;
             }).join(',');
 
-            let context = { name: answers.name, acronym: answers.acronym, dataTypes: dataTypes };
+            let integrationOptions = answers.integrationOptions.split(',').map(entry => {
+                return {
+                    key: entry,
+                    displayName: toDisplayName(entry),
+                }
+            });
+
+            let context = {
+                name: answers.name,
+                acronym: answers.acronym,
+                dataTypes: dataTypes,
+                integrationOptions: integrationOptions
+            };
 
             this.fs.copy(
                 this.templatePath('LICENSE'),
@@ -81,6 +114,10 @@ module.exports = class extends Generator {
                 this.templatePath('styles/template.less'),
                 this.destinationPath('styles/' + context.name + '.less')
             );
+
         });
+    }
+    install() {
+        this.npmInstall();
     }
 };

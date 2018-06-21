@@ -100,14 +100,16 @@ module.exports = {
      * @optional
      */
     options: [
+        <% for (option in integrationOptions) { %>
         {
-            key: "exampleKey",
-            name: "exampleName",
+            key: "<%= option.key %>",
+            name: "<%= option.displayName %>",
             description: "example description of this option",
             default: "",
             type: "text",
             userCanEdit: false,
             adminOnly: true
         }
+       <% } %>
     ]
 };

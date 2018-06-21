@@ -40,8 +40,23 @@ function startup(logger) {
     }
 }
 
+function validateStringOption(errors, options, optionName, errMessage) {
+    if (typeof options[optionName].value !== 'string' ||
+        (typeof options[optionName].value === 'string' && options[optionName].value.length === 0)) {
+        errors.push({
+            key: optionName,
+            message: errMessage
+        });
+    }
+}
+
 function validateOptions(options, callback) {
-    callback(null, null);
+    let errors = [];
+
+    // Example of how to validate a string option
+    validateOption(errors, options, 'exampleKey', 'You must provide an example option.');
+
+    callback(null, errors);
 }
 
 module.exports = {
