@@ -50,14 +50,6 @@ module.exports = {
             file: "./templates/<%= name %>-block.hbs"
         }
     },
-    summary: {
-        component: {
-            file: './components/<%= name %>-summary.js'
-        },
-        template: {
-            file: './templates/<%= name %>-summary.hbs'
-        }
-    },
     request: {
         // Provide the path to your certFile. Leave an empty string to ignore this option.
         // Relative paths are relative to the STAXX integration's root directory

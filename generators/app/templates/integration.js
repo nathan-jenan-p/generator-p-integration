@@ -1,11 +1,22 @@
 let async = require('async');
 let config = require('./config/config');
+let request = require('request');
 
 let Logger;
+let requestWithDefaults;
 let requestOptions = {};
 
-function getRequestOptions() {
-    return JSON.parse(JSON.stringify(requestOptions));
+function handleRequestError(request) {
+    return (options, expectedStatusCode, callback) => {
+        return request(options, (err, resp, body) => {
+            if (err || resp.statusCode !== expectedStatusCode) {
+                Logger.error(`error during http request to ${options.url}`, { error: err, status: resp ? resp.statusCode : 'unknown' });
+                callback({ error: err, statusCode: resp ? resp.statusCode : 'unknown' });
+            } else {
+                callback(null, body);
+            }
+        });
+    };
 }
 
 function doLookup(entities, options, callback) {
@@ -38,6 +49,8 @@ function startup(logger) {
     if (typeof config.request.rejectUnauthorized === 'boolean') {
         requestOptions.rejectUnauthorized = config.request.rejectUnauthorized;
     }
+
+    requestWithDefaults = handleRequestError(request.defaults(requestOptions));
 }
 
 function validateStringOption(errors, options, optionName, errMessage) {
@@ -54,7 +67,7 @@ function validateOptions(options, callback) {
     let errors = [];
 
     // Example of how to validate a string option
-    validateOption(errors, options, 'exampleKey', 'You must provide an example option.');
+    validateStringOption(errors, options, 'exampleKey', 'You must provide an example option.');
 
     callback(null, errors);
 }
