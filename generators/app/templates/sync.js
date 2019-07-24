@@ -8,8 +8,8 @@ let readline = require('readline');
 let fs = require('fs');
 
 let config = {};
-if (fs.existsSync('./.polarity.conf')) {
-    config = require('./.polarity.conf');
+if (fs.existsSync('~/.polarity.con')) {
+    config = require('~/.polarity.con');
 }
 
 let ssh = new NodeSsh();

@@ -76,18 +76,8 @@ module.exports = class extends Generator {
                 context
             );
             this.fs.copyTpl(
-                this.templatePath('components/template-summary.js'),
-                this.destinationPath('components/' + context.name + '-summary.js'),
-                context
-            );
-            this.fs.copyTpl(
                 this.templatePath('templates/template-block.hbs'),
                 this.destinationPath('templates/' + context.name + "-block.hbs"),
-                context
-            );
-            this.fs.copyTpl(
-                this.templatePath('templates/template-summary.hbs'),
-                this.destinationPath('templates/' + context.name + "-summary.hbs"),
                 context
             );
             this.fs.copyTpl(

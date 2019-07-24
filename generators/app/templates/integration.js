@@ -50,6 +50,8 @@ function startup(logger) {
         requestOptions.rejectUnauthorized = config.request.rejectUnauthorized;
     }
 
+    requestOptions.json = true;
+
     requestWithDefaults = handleRequestError(request.defaults(requestOptions));
 }
 
